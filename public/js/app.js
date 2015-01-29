@@ -41,7 +41,7 @@ app.factory('EmployeeService', ['$resource', function($resource) {
 app.factory('TeamService', ['$resource', function($resource) {
   return $resource('/teams/:teamId');
 }]);
-
+//  ???
 app.directive('imageFallback', function() {
   return {
     link: function(scope, elem, attrs) {
@@ -121,10 +121,12 @@ app.controller('EmployeeCtrl', ['$scope', '$routeParams', 'EmployeeService', 'Te
       }
     }
 
+  // With employee and team_id info, get the right team name
   $q.all([
     employee.get({
       employeeId: $routeParams.employeeId
-    }).$promise,
+    //access the raw $http promise via the $promise property on the object returned
+    }).$promise, 
     team.query().$promise
   ]).then(function(values) {
     $scope.teams = values[1];
